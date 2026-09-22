@@ -1,0 +1,38 @@
+========================================
+ GKD 订阅合并/去重报告
+========================================
+
+【源文件】
+  - id667(App存储)   gkd/subscription/667.json  id=667 name="id667的GKD订阅🚀" v592 (json) 应用=977 全局组=3 应用组=2431 规则=3839
+  - AIsouler(App存储) gkd/subscription/666.json  id=666 name="AIsouler的GKD订阅-已停止维护" v406 (json) 应用=886 全局组=3 应用组=2074 规则=3213
+  - id667(上游文件)    gkd3.json5  id=667 name="id667的GKD订阅🚀" v590 (json5) 应用=977 全局组=3 应用组=2430 规则=3832
+  - AIsouler(上游文件) AIsouler_gkd.json5  id=666 name="AIsouler的GKD订阅-已停止维护" v406 (json5) 应用=886 全局组=3 应用组=2074 规则=3213
+  - Adpro          Adpro_gkd.json5  id=825 name="AdproのGKD订阅 - 维护终止" v90 (json5) 应用=678 全局组=3 应用组=1561 规则=2387
+  - 梦念逍遥           gkd.json5  id=1 name="梦念逍遥のGKD订阅" v77 (json5) 应用=285 全局组=9 应用组=874 规则=1478
+  - 奥怪             aoguai_gkd.json5  id=86 name="奥怪的GKD订阅" v88 (json5) 应用=72 全局组=9 应用组=285 规则=642
+  - 甘霖             ganlin_gkd.json5  id=233 name="甘霖的GKD订阅" v71 (json5) 应用=610 全局组=3 应用组=1389 规则=1985
+
+【跳过/忽略】
+  - gkd3.json5 (同 id=667 的低版本副本)
+  - AIsouler_gkd.json5 (同 id=666 的低版本副本)
+
+【合并结果】
+  分类数量: 11
+  全局规则组: 12  (按语义合并同名组)
+  应用数量: 1055
+  应用规则组: 7135
+  规则总数: 11295
+  去除重复规则组: 1479
+  去除重复规则: 58
+
+【输出】
+  merged_gkd.json5  (6665.2 KB)
+  merged_gkd.version.json5  (0.1 KB)
+
+【说明】
+  1. 同 id 订阅的多份文件自动取 version 最高者; gkd2.json5(HTML 下载失败页)与 gkd/subscription/-2.json(App 本地空订阅)未参与合并。
+  2. "开屏广告" 与 "开屏广告-全局" 全局组视为同一组, 合并规则并去重, 组属性采用主流配置(fastQuery, matchTime=10000, actionMaximum=2)。
+  3. 应用组去重规则: 组名+规则内容完全一致才判定为重复; 同名的不同规则组会保留(它们覆盖不同的广告场景)。
+  4. 所有 key 已重新编号并修正 actionCdKey/actionMaximumKey/preKeys 引用。
+  5. 输出为 JSON 格式(JSON 是 JSON5 的子集), GKD App 可直接导入; 配套 merged_gkd.version.json5 用于订阅更新检查。
+  6. 已注入附加全局规则组 "支付弹窗-全局": 只点击 取消/暂不/关闭 类按钮屏蔽支付/会员/充值/购买弹窗, 绝不点击任何含"支付/购买/开通"的按钮; 出现支付密码/指纹验证时不执行。 如需停用, 在脚本顶部将 EXTRA_GLOBAL_GROUPS 置空数组即可。
